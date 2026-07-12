@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiiish Isaac Tracker</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
+<script>window.ISAAC_BASE="./";</script>
+</head>
+<body>
+<header id="topbar">
+  <div class="brand"><span class="logo">👶</span><span>Isaac Tracker</span></div>
+  <nav id="tabs">
+    <button data-tab="characters" class="active">Characters</button>
+    <button data-tab="completion">Completion</button>
+    <button data-tab="bosses">Bosses</button>
+    <button data-tab="items">Items</button>
+    <button data-tab="unlocks">Unlocks</button>
+  </nav>
+  <div id="savestate" title="Manual ticks are saved on the server (shared PC + phone)">saved</div>
+</header>
+
+<div id="profilebar">
+  <div class="pb-left">
+    <select id="profileSelect" title="Active profile / save file"></select>
+    <button id="syncBtn" class="pb-btn" title="Re-read the save file now">⟳ Sync</button>
+    <label class="pb-btn" title="Import a persistentgamedata.dat">⤒ Import<input type="file" id="importFile" accept=".dat" hidden></label>
+    <button id="profMenuBtn" class="pb-btn" title="Rename / new / delete profile">⋯</button>
+  </div>
+  <div class="pb-right" id="pbStats"></div>
+</div>
+
+<main id="app"><div class="pad">Loading…</div></main>
+
+<div id="modal" class="modal hidden"><div class="modal-card" id="modal-card"></div></div>
+
+<script src="saveparse.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
