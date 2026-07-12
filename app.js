@@ -60,9 +60,12 @@ async function boot(){
   try{
     state.data = await fetch(BASE+"data/isaac.json").then(r=>r.json());
     state.data.characters.forEach(c=>state.byName[c.name]=c);
-    // Progressive enhancement: use the local server (auto-watch) if present, else client mode.
+    // Progressive enhancement: the static build sets window.ISAAC_BASE (client mode, no server).
+    // Otherwise (local server deploy) probe /api/state for the auto-watch backend.
     let serverState=null;
-    try{ const r=await fetch(BASE+"api/state",{cache:"no-store"}); if(r.ok) serverState=await r.json(); }catch(e){}
+    if(!window.ISAAC_BASE){
+      try{ const r=await fetch(BASE+"api/state",{cache:"no-store"}); if(r.ok) serverState=await r.json(); }catch(e){}
+    }
     if(serverState){
       state.mode="server"; state.progress=serverState.progress; state.saveSlots=serverState.save_slots||[];
     }else{
