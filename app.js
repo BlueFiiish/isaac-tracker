@@ -191,10 +191,11 @@ function renderProfileBar(){
   const owned=state.data.collectibles.filter(e=>itemOwned(e.slug)).length;
   const chars=state.data.characters.filter(e=>charUnlocked(e.slug)).length;
   let synced;
-  if(AP().synced_at) synced = (state.mode==="server"?"● ":"")+`synced ${state.mode==="server"?(AP().synced_at.split(" ")[1]||""):AP().synced_at}`;
+  if(AP().parse_error) synced = "⚠ save parse failed: "+AP().parse_error;
+  else if(AP().synced_at) synced = (state.mode==="server"?"● ":"")+`synced ${state.mode==="server"?(AP().synced_at.split(" ")[1]||""):AP().synced_at}`;
   else synced = state.mode==="client" ? "no save loaded" : (AP().save_slot?"not synced":"manual profile");
   $("#pbStats").innerHTML =
-    `<span class="synced ${AP().synced_at?"":"stale"}">${esc(synced)}</span>`+
+    `<span class="synced ${(AP().synced_at&&!AP().parse_error)?"":"stale"}" title="${esc(synced)}">${esc(synced)}</span>`+
     stat(dgpct+"%","Dead God","dg")+
     stat(`${c.achievements_earned??"–"}/${c.achievements_total??"–"}`,"achievements")+
     stat(`${owned}`,"items owned")+
